@@ -1,17 +1,18 @@
-import {Button, Container, Grid} from '@mui/material';
+import { Button, Container, Grid } from '@mui/material';
 // import {AppInit} from "./firebase/FirebaseConfig.ts";
-import {ThemeProvider} from "@mui/material/styles";
-import {lightTheme, darkTheme} from "./theme/BaseTheme";
+import { ThemeProvider } from "@mui/material/styles";
+import { lightTheme, darkTheme } from "./theme/BaseTheme";
 import CssBaseline from "@mui/material/CssBaseline";
-import {useState} from "react";
+import { useState } from "react";
 import TabComponent from "./TabComponent/TabComponent.tsx";
 
-import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const auth = getAuth();
-signInWithEmailAndPassword(auth, 'test@test.com', 'abc123')
+signInWithEmailAndPassword(auth, 'conancod3s@gmail.com', 'abc123')
     .then((userCredential) => {
         // Signed in
+        console.log(userCredential.user)
         return userCredential.user
         // ...
     })
@@ -24,18 +25,18 @@ function App() {
 
     return (
         <ThemeProvider theme={theme ? lightTheme : darkTheme}>
-            <CssBaseline/>
+            <CssBaseline />
             <Container
                 maxWidth='xl'
                 sx={{
                     p: 4,
                     height: '100vh'
                 }}>
-                <Grid container direction={'column'} sx={{height: '100%', justifyContent: 'space-between'}}>
+                <Grid container direction={'column'} sx={{ height: '100%', justifyContent: 'space-between' }}>
                     <Grid item xs={11} sm={11} md={11} lg={11} xl={11} sx={{
                         overflow: 'hidden'
                     }}>
-                        <TabComponent/>
+                        <TabComponent />
                     </Grid>
                     <Grid item>
                         <Button

@@ -1,4 +1,4 @@
-import {Typography, Box, Container, Grid, List} from '@mui/material';
+import { Typography, Box, Container, Grid } from '@mui/material';
 
 interface ExperienceType {
     position: string,
@@ -15,7 +15,7 @@ const experience: ExperienceType[] = [
         endDate: "Present",
         primary: "Fully built out new applications based on React.js and Material UI framework.",
         secondary: "UI/UX Lead for a team that built out an AI/ML analytic capability with React.js to facilitate discovery, analysis, and correlation of enriched data. " +
-            "While incorporating AWS capabilities to support web-based applications and utilizing Jenkins and Jest "+
+            "While incorporating AWS capabilities to support web-based applications and utilizing Jenkins and Jest " +
             "we were able to accomplish continuous deployments and near-zero downtime. " +
             "This was accomplished by using Agile Application Development methodology which achieved rapid delivery and innovation in a robust DevSecOps environment."
 
@@ -92,7 +92,9 @@ const skills: string[] = [
     , `AWS (S3, EC2, CloudWatch)`
     , `Jenkins`
 ]
-const AboutMe = () => {
+
+export default function AboutMe() {
+
     return (
         <Container maxWidth="md">
             <Typography variant="h4" component="h1" gutterBottom>
@@ -108,9 +110,9 @@ const AboutMe = () => {
             </Box>
             <Box mt={3}>
                 <Typography variant="h6">Experience</Typography>
-                {experience.map((obj: ExperienceType) => (
-                    <Box sx={{p: 2}}>
-                        <Grid container direction={'row'} sx={{justifyContent: 'space-between', paddingBottom: 1}}>
+                {experience.map((obj: ExperienceType, idx: number) => (
+                    <Box sx={{ p: 2 }} key={idx}>
+                        <Grid container direction={'row'} sx={{ justifyContent: 'space-between', paddingBottom: 1 }}>
                             <Grid item>
                                 <Typography>{obj.position}</Typography>
                             </Grid>
@@ -118,34 +120,26 @@ const AboutMe = () => {
                                 <Typography>{`${obj.startDate} - ${obj.endDate}`}</Typography>
                             </Grid>
                         </Grid>
-                        <Typography variant="body1" sx={{paddingLeft: 2}}>{obj.secondary}</Typography>
+                        <Typography variant="body1" sx={{ paddingLeft: 2 }}>{obj.secondary}</Typography>
                     </Box>
                 ))}
             </Box>
             <Box mt={3}>
-                <List>
-                    <Typography variant="h6">Education</Typography>
-                    <Grid container sx={{justifyContent:'space-between'}}>
-                        {[`Associates of Computer Science`, `University of Maryland Global Campus`].map((obj: string) => (
-                            <Typography sx={{p:2}}>{obj}</Typography>
-                        ))}
-                    </Grid>
-                </List>
-                <Typography variant="body1"></Typography>
+                <Typography variant="h6">Education</Typography>
+                <Grid container sx={{ justifyContent: 'space-between' }}>
+                    {[`Associates of Computer Science`, `University of Maryland Global Campus`].map((obj: string, idx: number) => (
+                        <Typography sx={{ p: 2 }} key={idx}>{obj}</Typography>
+                    ))}
+                </Grid>
             </Box>
             <Box mt={3}>
-                <List>
-                    <Typography variant="h6">Skills</Typography>
-                   <Grid container sx={{justifyContent:'space-around'}}>
-                       {skills.map((obj: string) => (
-                           <Typography sx={{p:2}}>{obj}</Typography>
-                       ))}
-                   </Grid>
-                </List>
-
+                <Typography variant="h6">Skills</Typography>
+                <Grid container sx={{ justifyContent: 'space-around' }}>
+                    {skills.map((obj: string, idx: number) => (
+                        <Typography sx={{ p: 2 }} key={idx}>{obj}</Typography>
+                    ))}
+                </Grid>
             </Box>
         </Container>
     );
 };
-
-export default AboutMe;

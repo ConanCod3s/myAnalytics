@@ -1,54 +1,74 @@
-import {Fragment, useEffect} from 'react';
+import { Fragment, useEffect } from 'react';
 // import {LineChart} from '@mui/x-charts/LineChart';
-import {firebaseConfig} from "../firebase/FirebaseConfig.ts";
+import { firebaseConfig } from "../firebase/FirebaseConfig.ts";
 import axios from 'axios';
-import {AppAuth} from "../firebase/FirebaseConfig.ts";
+import { AppAuth } from "../firebase/FirebaseConfig.ts";
 
 const TrafficChart = () => {
 
     useEffect(() => {
+
         if (AppAuth.currentUser === null || AppAuth.currentUser === undefined) return;
-console.log(firebaseConfig.measurementId)
         const fetchData = async () => {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
-                const token: never = AppAuth.currentUser.accessToken;
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            const token: never = AppAuth.currentUser.accessToken;
 
-                const today = new Date();
-                const startDate = new Date(today.setDate(today.getDate() - 30));
+            const today = new Date();
+            const startDate = new Date(today.setDate(today.getDate() - 30));
 
-                const formattedStartDate = startDate.toISOString().split('T')[0];
-                const formattedEndDate = today.toISOString().split('T')[0];
+            const formattedStartDate = startDate.toISOString().split('T')[0];
+            const formattedEndDate = today.toISOString().split('T')[0];
 
-                const url = `https://analyticsdata.googleapis.com/v1beta/properties/${firebaseConfig.measurementId}:runReport`;
-                const params = {
-                    "dateRanges": [{
-                        "startDate": formattedStartDate, "endDate": formattedEndDate
-                    }],
-                    "dimensions": [{"name": "country"}],
-                    "metrics": [{"name": "activeUsers"}]
-                }
-                try {
-                    const response = await axios.post(url, params,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${token}`
-                            }
-                        });
-                    // const chartData = processChartData(response.data);
-                    // setData(chartData);
-                    // console.log('responseData', response.data)
-                    return response.data;
-                } catch (error) {
-                    console.error('error', error);
-                }
+            const url = `https://analyticsdata.googleapis.com/v1beta/properties/${firebaseConfig.measurementId}:runReport`;
+            const params = {
+                "dateRanges": [
+                    {
+                        "startDate": formattedStartDate,
+                        "endDate": formattedEndDate
+                    }
+                ],
+                "metrics": [
+                    {
+                        "name": "sessions"
+                    }
+                ],
+                "dimensions": [
+                    {
+                        "name": "date"
+                    }
+                ],
+                "orderBys": [
+                    {
+                        "metric": {
+                            "metricName": "sessions"
+                        },
+                        "desc": true
+                    }
+                ]
             }
-        ;
+
+            try {
+                const response = await axios.post(url, params,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${firebaseConfig.apiKey}`
+                        }
+                    });
+                // const chartData = processChartData(response.data);
+                // setData(chartData);
+                // console.log('responseData', response.data)
+                return response.data;
+            } catch (error) {
+                console.error('error', error);
+            }
+        }
+            ;
 
         fetchData();
     }, []);
-    if (!AppAuth.currentUser) return <Fragment/>
-    else return <Fragment/>
+    if (!AppAuth.currentUser) return <Fragment />
+    else return <Fragment />
     // const processChartData = (responseData: any) => {
     //     console.log('responseData', responseData)
     //     return <></>

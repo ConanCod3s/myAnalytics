@@ -1,13 +1,13 @@
 import * as React from 'react';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import Typography from '@mui/material/Typography';
+
 import Box from '@mui/material/Box';
-import {Paper} from "@mui/material";
+import { Paper } from "@mui/material";
 import AboutMe from "./AboutMe.tsx";
 import TrafficChart from "../graphs/TrafficChart.tsx";
 
-function CustomTabPanel({children, value, index}: {
+function CustomTabPanel({ children, value, index }: {
     children?: React.ReactNode,
     index: number,
     value: number,
@@ -21,8 +21,8 @@ function CustomTabPanel({children, value, index}: {
             aria-labelledby={`simple-tab-${index}`}
         >
             {value === index && (
-                <Paper sx={{p: 3, height: '100%'}}>
-                    <Typography>{children}</Typography>
+                <Paper sx={{ p: 3, height: '100%' }}>
+                    {children}
                 </Paper>
             )}
         </div>
@@ -44,20 +44,20 @@ export default function TabComponent() {
     };
 
     return (
-        <Box sx={{width: '100%', height: '98%'}}>
-            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+        <Box sx={{ width: '100%', height: '98%' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                     <Tab label="About Me" {...a11yProps(0)} />
                     <Tab label="Site Analytics" {...a11yProps(1)} />
                     <Tab label="¯\_(ツ)_/¯" {...a11yProps(2)} />
                 </Tabs>
             </Box>
-            <Box sx={{overflow: 'auto', height: '100%'}}>
+            <Box sx={{ overflow: 'auto', height: '100%' }}>
                 <CustomTabPanel value={value} index={0}>
-                    <AboutMe/>
+                    <AboutMe />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <TrafficChart/>
+                    <TrafficChart />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={2}>
                     ¯\_(ツ)_/¯
